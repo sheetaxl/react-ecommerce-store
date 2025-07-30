@@ -11,6 +11,7 @@ const categoryToDummyJSON = {
 
 const Home = () => {
   const [categoryImages, setCategoryImages] = useState({});
+  const [featuredProducts, setFeaturedProducts] = useState([]);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -26,7 +27,19 @@ const Home = () => {
       }
       setCategoryImages(data);
     };
+
+    const fetchFeatured = async () => {
+      try {
+        const res = await fetch(`https://dummyjson.com/products?limit=8`);
+        const json = await res.json();
+        setFeaturedProducts(json.products);
+      } catch (err) {
+        console.error('Error loading featured products', err);
+      }
+    };
+
     fetchImages();
+    fetchFeatured();
   }, []);
 
   return (
@@ -36,6 +49,7 @@ const Home = () => {
         <h2 className="text-2xl font-bold mb-4">Welcome to the E-Commerce Store</h2>
         <p className="text-gray-600 mb-10">Browse products, add to cart, and enjoy shopping!</p>
 
+        {/* Category Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {Object.keys(categoryToDummyJSON).map((category) => (
             <Link to={`/category/${categoryToDummyJSON[category]}`} key={category}>
@@ -53,6 +67,62 @@ const Home = () => {
             </Link>
           ))}
         </div>
+
+        {/* Featured Products Section */}
+        <h2 className="text-xl font-bold mt-20 mb-6">Featured Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {featuredProducts.map((product) => (
+            <Link to={`/product/${product.id}`} key={product.id}>
+              <div className="bg-white rounded-lg shadow hover:shadow-lg transition cursor-pointer">
+                <img
+                  src={product.thumbnail}
+                  alt={product.title}
+                  className="w-full h-48 object-cover rounded-t-lg"
+                  onError={(e) => (e.target.src = 'https://via.placeholder.com/400x250?text=No+Image')}
+                />
+                <div className="p-4 text-center">
+                  <h3 className="font-semibold text-lg">{product.title}</h3>
+                  <p className="text-gray-500">${product.price}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+        {/* Contact Us Section */}
+<div className="mt-20 bg-gray-100 py-12 px-6 max-w-4xl mx-auto rounded-lg shadow">
+  <h2 className="text-2xl font-bold text-center mb-6">Contact Us</h2>
+  <form className="space-y-4">
+    <input
+      type="text"
+      placeholder="Your Name"
+      className="w-full p-3 border rounded focus:outline-none"
+      required
+    />
+    <input
+      type="email"
+      placeholder="Your Email"
+      className="w-full p-3 border rounded focus:outline-none"
+      required
+    />
+    <textarea
+      rows="5"
+      placeholder="Your Message"
+      className="w-full p-3 border rounded focus:outline-none"
+      required
+    ></textarea>
+    <button
+      type="submit"
+      className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition w-full"
+    >
+      Send Message
+    </button>
+  </form>
+</div>
+
+{/* Footer */}
+<footer className="mt-12 py-6 bg-black text-white text-center text-sm">
+  © {new Date().getFullYear()} Ecommerce.BySheetal. All rights reserved.
+</footer>
       </div>
     </>
   );
