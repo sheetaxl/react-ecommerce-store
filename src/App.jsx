@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
@@ -9,61 +9,61 @@ import CheckoutPage from './pages/CheckoutPage';
 import PrivateRoute from './utils/PrivateRoute';
 import CategoryPage from './pages/CategoryPage';
 import ProductDetail from './pages/ProductDetail';
-import { CartProvider } from './context/CartContext';
-import NotFound from './pages/NotFound'; 
-import ProductDetailPage from "./pages/ProductDetail";
+import NotFound from './pages/NotFound';
+import Navbar from './components/Navbar'; // ✅ Navbar added
+
 function App() {
   return (
-    <Router>
-      <CartProvider>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/category/:categoryName" element={<CategoryPage />} />
-          <Route path="/product/:productId" element={<ProductDetail />} />
-          <Route path="/cart" element={<CartPage />} />
+    <>
+      <Navbar /> {/* ✅ Always visible on all pages */}
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/category/:categoryName" element={<CategoryPage />} />
+        <Route path="/product/:productId" element={<ProductDetail />} />
+        <Route path="/cart" element={<CartPage />} />
 
-          {/* Protected Routes */}
-          <Route
-            path="/checkout"
-            element={
-              <PrivateRoute>
-                <CheckoutPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/shop"
-            element={
-              <PrivateRoute>
-                <Shop />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <PrivateRoute>
-                <About />
-              </PrivateRoute>
-            }
-          />
+        {/* Protected Routes */}
+        <Route
+          path="/checkout"
+          element={
+            <PrivateRoute>
+              <CheckoutPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/shop"
+          element={
+            <PrivateRoute>
+              <Shop />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <PrivateRoute>
+              <About />
+            </PrivateRoute>
+          }
+        />
 
-          
-          <Route path="*" element={<NotFound />} />
-          <Route path="/product/:productId" element={<ProductDetailPage />} />
-        </Routes>
-      </CartProvider>
-    </Router>
+        {/* 404 Fallback */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 
 export default App;
+
+

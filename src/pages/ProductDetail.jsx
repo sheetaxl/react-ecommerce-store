@@ -7,6 +7,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { dispatch } = useCart();
+  const [showMessage, setShowMessage] = useState(false); // ✅ State for popup
 
   useEffect(() => {
     fetch(`https://dummyjson.com/products/${productId}`)
@@ -14,6 +15,16 @@ const ProductDetail = () => {
       .then(data => setProduct(data))
       .catch(error => console.error("Error fetching product:", error));
   }, [productId]);
+
+  const handleAddToCart = () => {
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: { ...product, quantity }
+    });
+    console.log('Product added to cart:', product.title);
+    setShowMessage(true); // ✅ Show popup
+    setTimeout(() => setShowMessage(false), 2000); // ✅ Hide after 2s
+  };
 
   if (!product) return <p className="text-center py-10">Loading...</p>;
 
@@ -31,13 +42,11 @@ const ProductDetail = () => {
         ))}
       </div>
 
-      
       <div className="space-y-4">
         <h1 className="text-3xl font-bold">{product.title}</h1>
         <p className="text-xl text-gray-700">₹{product.price}</p>
         <p className="text-gray-600">{product.description}</p>
 
-        
         <div>
           <p className="font-semibold">Size</p>
           <div className="flex gap-2 mt-1">
@@ -52,7 +61,6 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        
         <div className="flex items-center gap-2 mt-4">
           <span className="font-medium">Quantity:</span>
           <div className="flex border rounded">
@@ -72,15 +80,8 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        
         <button
-          onClick={() => {
-            dispatch({
-              type: 'ADD_TO_CART',
-              payload: { ...product, quantity }
-            });
-            console.log('Product added to cart:', product.title);
-          }}
+          onClick={handleAddToCart}
           className="bg-black text-white px-6 py-3 rounded-lg mt-6 hover:bg-gray-800 transition"
         >
           Add to Cart - ₹{product.price * quantity}
@@ -91,6 +92,13 @@ const ProductDetail = () => {
           <p>Free returns</p>
         </div>
       </div>
+
+      {/* ✅ Popup Message */}
+      {showMessage && (
+        <div className="fixed top-6 right-6 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50">
+          ✅ Item added to cart!
+        </div>
+      )}
     </div>
   );
 };

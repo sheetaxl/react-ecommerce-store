@@ -4,7 +4,7 @@ const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_TO_CART':
+    case 'ADD_TO_CART': {
       const existing = state.find(item => item.id === action.payload.id);
       if (existing) {
         return state.map(item =>
@@ -15,6 +15,7 @@ const cartReducer = (state, action) => {
       } else {
         return [...state, { ...action.payload, quantity: 1 }];
       }
+    }
 
     case 'REMOVE_FROM_CART':
       return state.filter(item => item.id !== action.payload);
@@ -28,13 +29,16 @@ const cartReducer = (state, action) => {
 
     case 'DECREMENT':
       return state.map(item =>
-        item.id === action.payload && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
+        item.id === action.payload
+          ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
           : item
       );
 
     case 'SET_CART':
       return action.payload;
+
+    case 'CLEAR_CART':
+      return [];
 
     default:
       return state;
@@ -47,23 +51,23 @@ export const CartProvider = ({ children }) => {
     return localData ? JSON.parse(localData) : [];
   });
 
-  
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
-  
   const totalPrice = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
-    
-    <CartContext.Provider value={{ cart, dispatch, totalPrice }}>
+    <CartContext.Provider value={{ cart, dispatch, totalPrice, totalItems }}>
       {children}
     </CartContext.Provider>
   );
 };
 
 export const useCart = () => useContext(CartContext);
+

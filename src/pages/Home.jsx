@@ -44,7 +44,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      
       <div className="p-8 text-center">
         <h2 className="text-2xl font-bold mb-4">Welcome to the E-Commerce Store</h2>
         <p className="text-gray-600 mb-10">Browse products, add to cart, and enjoy shopping!</p>
