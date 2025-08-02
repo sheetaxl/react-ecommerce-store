@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar"; // adjust the path if needed
 const Shop = () => {
   return (
     <>
-      <Navbar />
+      
       <div className="bg-gray-100 min-h-screen px-8 py-12">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold mb-4">Our Latest Arrivals</h1>
