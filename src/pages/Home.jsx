@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar'; 
 
 const categoryToDummyJSON = {
   Women: 'womens-dresses',
@@ -44,7 +44,26 @@ const Home = () => {
 
   return (
     <>
-      
+      {/* Hero Section */}
+      <section
+        className="h-screen w-full bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: `url("/hero.jpg")` }}
+      >
+        <div className="bg-black bg-opacity-60 p-10 rounded-lg text-center text-white max-w-2xl">
+          <h1 className="text-5xl font-bold mb-4">Elevate Your Style</h1>
+          <p className="text-lg mb-6">
+            Discover premium fashion collections crafted for trendsetters.
+          </p>
+          <Link
+            to="/shop"
+            className="inline-block bg-white text-black px-6 py-3 text-lg rounded hover:bg-gray-200 transition"
+          >
+            Shop Now
+          </Link>
+        </div>
+      </section>
+
+      {/* Main Content */}
       <div className="p-8 text-center">
         <h2 className="text-2xl font-bold mb-4">Welcome to the E-Commerce Store</h2>
         <p className="text-gray-600 mb-10">Browse products, add to cart, and enjoy shopping!</p>
@@ -88,45 +107,45 @@ const Home = () => {
             </Link>
           ))}
         </div>
-        {/* Contact Us Section */}
-<div className="mt-20 bg-gray-100 py-12 px-6 max-w-4xl mx-auto rounded-lg shadow">
-  <h2 className="text-2xl font-bold text-center mb-6">Contact Us</h2>
-  <form className="space-y-4">
-    <input
-      type="text"
-      placeholder="Your Name"
-      className="w-full p-3 border rounded focus:outline-none"
-      required
-    />
-    <input
-      type="email"
-      placeholder="Your Email"
-      className="w-full p-3 border rounded focus:outline-none"
-      required
-    />
-    <textarea
-      rows="5"
-      placeholder="Your Message"
-      className="w-full p-3 border rounded focus:outline-none"
-      required
-    ></textarea>
-    <button
-      type="submit"
-      className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition w-full"
-    >
-      Send Message
-    </button>
-  </form>
-</div>
 
-{/* Footer */}
-<footer className="mt-12 py-6 bg-black text-white text-center text-sm">
-  © {new Date().getFullYear()} Ecommerce.BySheetal. All rights reserved.
-</footer>
+        {/* Contact Us Section */}
+        <div className="mt-20 bg-gray-100 py-12 px-6 max-w-4xl mx-auto rounded-lg shadow">
+          <h2 className="text-2xl font-bold text-center mb-6">Contact Us</h2>
+          <form className="space-y-4">
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="w-full p-3 border rounded focus:outline-none"
+              required
+            />
+            <input
+              type="email"
+              placeholder="Your Email"
+              className="w-full p-3 border rounded focus:outline-none"
+              required
+            />
+            <textarea
+              rows="5"
+              placeholder="Your Message"
+              className="w-full p-3 border rounded focus:outline-none"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition w-full"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        {/* Footer */}
+        <footer className="mt-12 py-6 bg-black text-white text-center text-sm">
+          © {new Date().getFullYear()} Ecommerce.BySheetal. All rights reserved.
+        </footer>
       </div>
     </>
   );
 };
 
 export default Home;
-

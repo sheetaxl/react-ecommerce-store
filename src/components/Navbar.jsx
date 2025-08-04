@@ -18,7 +18,7 @@ const Navbar = () => {
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+    <nav className="bg-black text-white p-4 flex justify-between items-center shadow-md">
       <div className="flex items-center gap-6">
         <Link to="/" className="text-xl font-bold">Ecommerce</Link>
         <Link to="/shop" className="hover:underline">Shop</Link>

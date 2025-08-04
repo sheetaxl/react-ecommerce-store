@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/Navbar"; // adjust the path if needed
+import Navbar from "../components/Navbar"; 
 
 const Shop = () => {
   return (
