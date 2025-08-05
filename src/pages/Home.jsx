@@ -64,80 +64,144 @@ const Home = () => {
       </section>
 
       {/* Main Content */}
-      <div className="p-8 text-center">
-        <h2 className="text-2xl font-bold mb-4">Welcome to the E-Commerce Store</h2>
-        <p className="text-gray-600 mb-10">Browse products, add to cart, and enjoy shopping!</p>
+      
+      
+      <div className="p-8 relative bg-gradient-to-r from-red-50 to-black-50 py-16 px-6 text-center overflow-hidden">
+        
+        
+
+<div className="max-w-3xl mx-auto animate-fade-in-up">
+    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 tracking-tight hover:scale-105 transition-transform duration-300">
+      Welcome to <span className="text-red-600">E-Commerce By Sheetal</span>
+    </h2>
+    <p className="text-lg text-gray-600 mb-8">
+      Browse hand-picked collections, add your favorites to cart, and enjoy a seamless shopping experience.
+    </p>
+
+    
+  </div>
+
+
+
+
 
         {/* Category Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {Object.keys(categoryToDummyJSON).map((category) => (
-            <Link to={`/category/${categoryToDummyJSON[category]}`} key={category}>
-              <div className="bg-white rounded-lg shadow hover:shadow-lg hover:scale-105 transition cursor-pointer">
-                <img
-                  src={categoryImages[category]}
-                  alt={category}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                  onError={(e) => (e.target.src = 'https://via.placeholder.com/400x250?text=Image+Not+Available')}
-                />
-                <div className="p-4 text-lg font-semibold text-center">
-                  {category}
-                </div>
-              </div>
-            </Link>
-          ))}
+<section className="mt-16 px-4">
+  <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+    Shop by Category
+  </h2>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+    {Object.keys(categoryToDummyJSON).map((category) => (
+      <Link to={`/category/${categoryToDummyJSON[category]}`} key={category}>
+        <div className="group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 transform hover:scale-105 bg-white">
+          <img
+            src={categoryImages[category]}
+            alt={category}
+            className="w-full h-60 object-cover group-hover:opacity-90 transition duration-300"
+            onError={(e) => (e.target.src = 'https://via.placeholder.com/400x250?text=Image+Not+Available')}
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+            <span className="text-white text-xl font-semibold tracking-wide">
+              {category}
+            </span>
+          </div>
         </div>
+      </Link>
+    ))}
+  </div>
+</section>
+
 
         {/* Featured Products Section */}
-        <h2 className="text-xl font-bold mt-20 mb-6">Featured Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {featuredProducts.map((product) => (
-            <Link to={`/product/${product.id}`} key={product.id}>
-              <div className="bg-white rounded-lg shadow hover:shadow-lg transition cursor-pointer">
-                <img
-                  src={product.thumbnail}
-                  alt={product.title}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                  onError={(e) => (e.target.src = 'https://via.placeholder.com/400x250?text=No+Image')}
-                />
-                <div className="p-4 text-center">
-                  <h3 className="font-semibold text-lg">{product.title}</h3>
-                  <p className="text-gray-500">${product.price}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
+<section className="mt-20 px-4">
+  <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+    Featured Products
+  </h2>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+    {featuredProducts.map((product) => (
+      <Link to={`/product/${product.id}`} key={product.id}>
+        <div className="relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 group">
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            className="w-full h-60 object-cover group-hover:opacity-90 transition duration-300"
+            onError={(e) => (e.target.src = 'https://via.placeholder.com/400x250?text=No+Image')}
+          />
+          <div className="p-4 text-center">
+            <h3 className="font-semibold text-lg text-gray-800 group-hover:text-black transition">
+              {product.title}
+            </h3>
+            <p className="text-gray-500 text-md mt-1 group-hover:text-gray-700 transition">
+              ₹{product.price}
+            </p>
+          </div>
+          {/* Optional "Quick View" Button */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300">
+            <span className="inline-block bg-black text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800">
+              View Details
+            </span>
+          </div>
         </div>
+      </Link>
+    ))}
+  </div>
+</section>
 
         {/* Contact Us Section */}
-        <div className="mt-20 bg-gray-100 py-12 px-6 max-w-4xl mx-auto rounded-lg shadow">
-          <h2 className="text-2xl font-bold text-center mb-6">Contact Us</h2>
-          <form className="space-y-4">
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-full p-3 border rounded focus:outline-none"
-              required
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="w-full p-3 border rounded focus:outline-none"
-              required
-            />
-            <textarea
-              rows="5"
-              placeholder="Your Message"
-              className="w-full p-3 border rounded focus:outline-none"
-              required
-            ></textarea>
-            <button
-              type="submit"
-              className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition w-full"
-            >
-              Send Message
-            </button>
-          </form>
-        </div>
+<section className="mt-20 py-16 px-6 bg-gradient-to-br from-gray-50 to-gray-100 shadow-inner">
+  <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-10">
+    <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 animate-fade-in-up">
+      Get in Touch
+    </h2>
+    <form className="space-y-6">
+      <div className="relative group">
+        <input
+          type="text"
+          required
+          className="w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black transition-all peer"
+          placeholder=" "
+        />
+        <label className="absolute left-4 top-2 text-sm text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">
+          Your Name
+        </label>
+      </div>
+
+      <div className="relative group">
+        <input
+          type="email"
+          required
+          className="w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black transition-all peer"
+          placeholder=" "
+        />
+        <label className="absolute left-4 top-2 text-sm text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">
+          Your Email
+        </label>
+      </div>
+
+      <div className="relative group">
+        <textarea
+          rows="5"
+          required
+          className="w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black transition-all peer"
+          placeholder=" "
+        ></textarea>
+        <label className="absolute left-4 top-2 text-sm text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 transition-all">
+          Your Message
+        </label>
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-black text-white py-3 rounded-md hover:bg-gray-800 transition-transform duration-300 transform hover:scale-105 shadow-md"
+      >
+        Send Message
+      </button>
+    </form>
+  </div>
+</section>
+
 
         {/* Footer */}
         <footer className="mt-12 py-6 bg-black text-white text-center text-sm">

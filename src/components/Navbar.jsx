@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; 
-import { ShoppingCart } from 'lucide-react'; // You can also use an emoji 🛒 if you prefer
+import { ShoppingCart } from 'lucide-react'; 
 
 const Navbar = () => {
   const navigate = useNavigate();
