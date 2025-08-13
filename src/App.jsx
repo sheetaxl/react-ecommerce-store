@@ -10,7 +10,8 @@ import PrivateRoute from './utils/PrivateRoute';
 import CategoryPage from './pages/CategoryPage';
 import ProductDetail from './pages/ProductDetail';
 import NotFound from './pages/NotFound';
-import Navbar from './components/Navbar'; // ✅ Navbar added
+import Navbar from './components/Navbar';
+import SearchResultsPage from './pages/SearchResultsPage'; 
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/category/:categoryName" element={<CategoryPage />} />
         <Route path="/product/:productId" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/search" element={<SearchResultsPage />} /> 
 
         {/* Protected Routes */}
         <Route
@@ -65,5 +67,3 @@ function App() {
 }
 
 export default App;
-
-
