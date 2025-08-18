@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
 
-  
+  // Load orders from localStorage
   useEffect(() => {
     const storedOrders = JSON.parse(localStorage.getItem("orders")) || [];
     const sortedOrders = storedOrders.sort(
@@ -13,7 +13,7 @@ const OrderHistory = () => {
     setOrders(sortedOrders);
   }, []);
 
-  
+  // Auto-update order status
   useEffect(() => {
     if (orders.length === 0) return;
 
@@ -23,7 +23,11 @@ const OrderHistory = () => {
           if (order.status === "Processing") {
             return { ...order, status: "Shipped" };
           } else if (order.status === "Shipped") {
-            return { ...order, status: "Delivered" };
+            return {
+              ...order,
+              status: "Delivered",
+              deliveredAt: new Date().toISOString(), // add delivered date
+            };
           }
           return order;
         });
@@ -36,13 +40,20 @@ const OrderHistory = () => {
     return () => clearInterval(interval);
   }, [orders]);
 
-  
+  // Cancel Order
   const handleCancelOrder = (id) => {
     if (window.confirm("Are you sure you want to cancel this order?")) {
       const updatedOrders = orders.filter((order) => order.id !== id);
       setOrders(updatedOrders);
       localStorage.setItem("orders", JSON.stringify(updatedOrders));
     }
+  };
+
+  // Track Order
+  const handleTrackOrder = (order) => {
+    alert(
+      `🚚 Tracking Order #${order.id}\nStatus: ${order.status}\nEstimated Delivery: ${order.deliveryDate}`
+    );
   };
 
   return (
@@ -58,7 +69,7 @@ const OrderHistory = () => {
               key={order.id}
               className="border rounded-lg p-5 shadow-sm bg-white hover:shadow-md transition"
             >
-              
+              {/* Header */}
               <div className="flex justify-between items-center border-b pb-3 mb-3">
                 <div>
                   <h2 className="font-semibold text-lg">
@@ -72,11 +83,24 @@ const OrderHistory = () => {
                       minute: "2-digit",
                     })}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    <span className="font-medium">Estimated Delivery:</span>{" "}
-                    {order.deliveryDate}
-                  </p>
+
+                  {order.status === "Delivered" && order.deliveredAt ? (
+                    <p className="text-sm text-green-600">
+                      ✅ Delivered On:{" "}
+                      {new Date(order.deliveredAt).toLocaleDateString()} at{" "}
+                      {new Date(order.deliveredAt).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-gray-600">
+                      <span className="font-medium">Estimated Delivery:</span>{" "}
+                      {order.deliveryDate}
+                    </p>
+                  )}
                 </div>
+
                 <span
                   className={`text-sm px-3 py-1 rounded-full font-medium ${
                     order.status === "Delivered"
@@ -90,7 +114,7 @@ const OrderHistory = () => {
                 </span>
               </div>
 
-              
+              {/* Order Items */}
               <div className="flex items-center gap-4">
                 {order.items[0] && (
                   <img
@@ -115,8 +139,8 @@ const OrderHistory = () => {
                 <p className="font-bold text-lg">₹{order.total}</p>
               </div>
 
-              
-              <div className="mt-4 flex gap-3">
+              {/* Actions */}
+              <div className="mt-4 flex gap-3 flex-wrap">
                 <Link
                   to={`/orders/${order.id}`}
                   className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
@@ -129,14 +153,22 @@ const OrderHistory = () => {
                 >
                   Download Invoice
                 </button>
-                {order.status !== "Delivered" && (
-                  <button
-                    onClick={() => handleCancelOrder(order.id)}
-                    className="px-4 py-2 bg-red-100 text-red-600 rounded hover:bg-red-200 text-sm"
-                  >
-                    Cancel Order
-                  </button>
-                )}
+                {order.status !== "Delivered" ? (
+                  <>
+                    <button
+                      onClick={() => handleTrackOrder(order)}
+                      className="px-4 py-2 bg-green-100 text-green-600 rounded hover:bg-green-200 text-sm"
+                    >
+                      Track Order
+                    </button>
+                    <button
+                      onClick={() => handleCancelOrder(order.id)}
+                      className="px-4 py-2 bg-red-100 text-red-600 rounded hover:bg-red-200 text-sm"
+                    >
+                      Cancel Order
+                    </button>
+                  </>
+                ) : null}
               </div>
             </div>
           ))}

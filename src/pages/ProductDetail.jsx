@@ -88,13 +88,13 @@ const ProductDetail = () => {
           ))}
         </div>
 
-        {/* Product Info */}
+        
         <div className="space-y-4">
           <h1 className="text-3xl font-bold">{product.title}</h1>
           <p className="text-xl text-gray-700">₹{product.price}</p>
           <p className="text-gray-600">{product.description}</p>
 
-          {/* Size Selection */}
+          
           <div>
             <p className="font-semibold">Size</p>
             <div className="flex gap-2 mt-1">
@@ -109,7 +109,7 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          {/* Quantity */}
+          
           <div className="flex items-center gap-2 mt-4">
             <span className="font-medium">Quantity:</span>
             <div className="flex border rounded">
@@ -129,7 +129,7 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          {/* Add to Cart */}
+          
           <button
             onClick={handleAddToCart}
             className="bg-black text-white px-6 py-3 rounded-lg mt-6 hover:bg-gray-800 transition"
@@ -139,7 +139,7 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      {/* ✅ Reviews Section */}
+      
       <div className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
 
@@ -152,7 +152,7 @@ const ProductDetail = () => {
             onChange={(e) => setReviewText(e.target.value)}
           />
           
-          {/* ✅ Image Upload */}
+          
           <input
             type="file"
             accept="image/*"
@@ -160,7 +160,7 @@ const ProductDetail = () => {
             onChange={handleImageUpload}
           />
 
-          {/* Star Rating */}
+          
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map(star => (
               <span
@@ -203,7 +203,7 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      {/* ✅ Popup Message */}
+      
       {showMessage && (
         <div className="fixed top-6 right-6 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50">
           ✅ Item added to cart!
