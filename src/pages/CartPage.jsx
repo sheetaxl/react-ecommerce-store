@@ -10,14 +10,41 @@ const CartPage = () => {
   const decrement = (id) => dispatch({ type: 'DECREMENT', payload: id });
   const remove = (id) => dispatch({ type: 'REMOVE_FROM_CART', payload: id });
 
-  const handleCheckout = () => {
-    navigate('/checkout');
-  };
+  const computedTotal =
+    totalPrice ??
+    cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  const computedTotal = totalPrice ?? cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  const handleCheckout = () => {
+    if (cart.length === 0) return;
+
+    //  Get existing orders from localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+
+    //  Create new order
+    const newOrder = {
+      id: Date.now(),
+      items: cart,
+      total: computedTotal,
+      discount: 0, // You can add logic later
+      date: new Date().toLocaleDateString(),
+      estimatedDelivery: new Date(
+        Date.now() + 5 * 24 * 60 * 60 * 1000
+      ).toLocaleDateString(),
+      status: 'Pending',
+    };
+
+    // Save updated orders in localStorage
+    localStorage.setItem(
+      'orders',
+      JSON.stringify([...existingOrders, newOrder])
+    );
+
+    // Clear cart
+    dispatch({ type: 'CLEAR_CART' });
+
+    // Redirect to Order History page
+    navigate('/orders');
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -42,7 +69,9 @@ const CartPage = () => {
                   />
                   <div>
                     <h2 className="font-semibold text-lg">{item.title}</h2>
-                    <p className="text-sm text-gray-600">₹{item.price} per item</p>
+                    <p className="text-sm text-gray-600">
+                      ₹{item.price} per item
+                    </p>
                   </div>
                 </div>
 
@@ -62,7 +91,9 @@ const CartPage = () => {
                       +
                     </button>
                   </div>
-                  <p className="text-md font-medium">₹{item.price * item.quantity}</p>
+                  <p className="text-md font-medium">
+                    ₹{item.price * item.quantity}
+                  </p>
                   <button
                     onClick={() => remove(item.id)}
                     className="text-red-500 hover:underline text-sm"
@@ -75,12 +106,14 @@ const CartPage = () => {
           </div>
 
           <div className="mt-8 text-right border-t pt-4">
-            <p className="text-xl font-bold">Total: ₹{computedTotal.toFixed(2)}</p>
+            <p className="text-xl font-bold">
+              Total: ₹{computedTotal.toFixed(2)}
+            </p>
             <button
               onClick={handleCheckout}
               className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
             >
-              Proceed to Checkout
+              Place Order
             </button>
           </div>
         </>

@@ -11,19 +11,21 @@ import CategoryPage from './pages/CategoryPage';
 import ProductDetail from './pages/ProductDetail';
 import NotFound from './pages/NotFound';
 import Navbar from './components/Navbar';
-import SearchResultsPage from './pages/SearchResultsPage'; 
+import SearchResultsPage from './pages/SearchResultsPage';
+import OrderHistory from "./pages/OrderHistory";
+import OrderDetail from "./pages/OrderDetail";
 
 function App() {
   return (
     <>
-      <Navbar /> {/* ✅ Always visible on all pages */}
+      <Navbar />
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/category/:categoryName" element={<CategoryPage />} />
         <Route path="/product/:productId" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/search" element={<SearchResultsPage />} /> 
+        <Route path="/search" element={<SearchResultsPage />} />
 
         {/* Protected Routes */}
         <Route
@@ -58,6 +60,10 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        {/* Order Pages (must come before NotFound) */}
+        <Route path="/orders" element={<OrderHistory />} />
+        <Route path="/orders/:id" element={<OrderDetail />} />
 
         {/* 404 Fallback */}
         <Route path="*" element={<NotFound />} />
