@@ -151,6 +151,15 @@ const Home = () => {
                 </div>
               </Link>
             ))}
+
+          </div>
+          <div className="mt-10 text-center">
+            <Link
+              to="/shop"
+              className="inline-block bg-red-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-red-500 transition-transform transform hover:scale-105 shadow-md"
+            >
+              View All Products
+            </Link>
           </div>
         </section>
 
@@ -192,7 +201,7 @@ const Home = () => {
                   className="w-full px-4 pt-6 pb-2 bg-gray-900 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-black transition-all peer"
                   placeholder=" "
                 ></textarea>
-                 <label className="absolute left-4 top-2 text-sm text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all">
+                <label className="absolute left-4 top-2 text-sm text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all">
                   Your Message
                 </label>
               </div>
@@ -200,7 +209,7 @@ const Home = () => {
               <button
                 type="submit"
                 className="w-full bg-red-600 text-white py-3 rounded-md hover:bg-red-500 transition-transform duration-300 transform hover:scale-105 shadow-md"
-      
+
               >
                 Send Message
               </button>
