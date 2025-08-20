@@ -88,7 +88,7 @@ const ProductDetail = () => {
           ))}
         </div>
 
-        
+        {/* Product Info */}
         <div className="space-y-4">
           <h1 className="text-3xl font-bold">{product.title}</h1>
           <p className="text-xl text-gray-700">₹{product.price}</p>
