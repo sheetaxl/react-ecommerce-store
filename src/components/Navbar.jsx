@@ -65,6 +65,18 @@ const Navbar = () => {
           )}
         </Link>
       </div>
+{/* Center Logo */}
+<Link
+  to="/"
+  className="absolute left-1/2 transform -translate-x-1/2"
+>
+  <img 
+    src="/logo.png.jpg"
+    alt="Sheetal's Store Logo" 
+    className="h-10 w-auto object-contain" 
+  />
+</Link>
+
 
       {/* Right Actions */}
       <div className="flex items-center gap-4 relative">
